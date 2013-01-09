@@ -30,10 +30,6 @@ nextWord existingFragment newWord = (before, intersectionChar, after)
     before = List.takeWhile (/= intersectionChar) newWord
     after = List.dropWhile (/= intersectionChar) newWord
 
-addWord :: Board -> String -> Board
-addWord (firstWord, []) newWord = (firstWord, [nextWord firstWord])
-addWord (firstWord, attachedWords) newWord = (firstWord, attachedWords ++ [nextWord $ tail $ last $ attachedWords])
-
 buildDict :: [String] -> Map.Map String (Set.Set String)
 buildDict words = Map.fromListWith Set.union sortedWords
   where
