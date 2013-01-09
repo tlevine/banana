@@ -40,6 +40,10 @@ fits boardStrip newWord = all letterMatches $ zip boardStrip newWord
 -- nextWord :: Board -> Board
 -- nextWord oldBoard =
 
+placeWord :: Board -> Board
+placeWord board = 
+  startPoints = [(x,y) | x <- [xMin..xMax], y <- [yMin..yMax]]
+
 buildDict :: [String] -> Map.Map String (Set.Set String)
 buildDict words = Map.fromListWith Set.union sortedWords
   where
