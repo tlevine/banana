@@ -10,7 +10,7 @@ import qualified Data.Array as Array
 import qualified Data.List as List
 import qualified Data.Map as Map
 import qualified Data.Set as Set
-  
+import qualified Data.Tuple as Tuple
 
 -- Board structure
 type Board = Array.Array Integer (Array.Array Integer Char)
@@ -28,17 +28,21 @@ firstWord word = newBoard//[((startPointX,startPointY + y), word !! y) | y <- [0
     startPointX = round $ boardSide / 2
     startPointY = round $ boardSide / 2
 
--- Does a word fit at a location?
-fits :: Board -> String -> (Int, Int) -> String
-fits board word (startX, startY) direction =
+-- What does a location have as the word?
+contents :: Board -> (Int, Int) -> Int -> String
+contents board (startX, startY) wordLength direction =
   | direction == "horizontal" = map (\x -> board ! x ! startx) xRange
   | direction == "vertical" = map (\y -> board ! y ! starty) yRange
   where
-    xRange = [startX..(startX + (length word))]
-    yRange = [startY..(startY + (length word))]
+    xRange = [startX..(startX + (wordLength))]
+    yRange = [startY..(startY + (wordLength))]
 
-nextWord :: Board -> Board
-nextWord oldBoard =
+-- Does a word fit at a location?
+fits :: String -> String -> Bool
+fits boardStrip newWord = map (\pair -> (fst pair) == ' ' || (fst pair == snd pair)) $ zip boardStrip newWord
+
+-- nextWord :: Board -> Board
+-- nextWord oldBoard =
 
 buildDict :: [String] -> Map.Map String (Set.Set String)
 buildDict words = Map.fromListWith Set.union sortedWords
