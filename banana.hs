@@ -1,28 +1,23 @@
 import qualified Data.Map as Map
+import qualified Data.Set as Set
   
-builddict :: [String] -> Data.Map
-builddict [] = 
-builddict 
+sample_lengths_dict = Map.fromList [ (7, Set.fromList ["accusal", "obelisk"]), (11, Set.fromList ["inscription", "insecticide"]) ]
 
-fromList [(5,'a'), (3,'b')]
-
-sample_lengths_dict = Map.fromList [
-    (7, Set.fromList ["accusal", "obelisk"]),
-    (11, Set.fromList ["inscription", "insecticide"])
-]
-
-board :: Map -> String -> [String]
-board dict "AFTERALASTTHIMBLE" = ["AFTER", "ALAST", "THIMBLE"]
+-- board :: Map.Map -> String -> [String]
+-- board dict "AFTERALASTTHIMBLE" = ["AFTER", "ALAST", "THIMBLE"]
 
 -- Can the word connect?
 -- Join the words so far and see whether the new word might connect.
-connects :: Set -> String -> Bool
-connects words_so_far new_word =
+connects :: Set.Set String -> String -> Bool
+connects words_so_far new_word = True
 
 -- Choose word length combinations
 fan :: Int -> [[Int]]
+fan 0 = []
 fan 1 = [[2]]
-fan 2 = [[3], [2,2]]
-fan piecesminusone = [piecesminusone + 1] ++ (map getPrevious (reverse [2..piecesminusone]))
+fan piecesminusone = [[piecesminusone + 1]] ++ soFar
   where
-    getPrevious i = [i] ++ (fan piecesminusone)
+    soFar = map (\ list -> list ++ [2]) (fan (piecesminusone - 1 ))
+
+main = do
+  putStrLn $ show $ fan 4
