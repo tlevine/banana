@@ -31,8 +31,8 @@ firstWord word = newBoard//[((startPointX,startPointY + y), word !! y) | y <- [0
 -- Does a word fit at a location?
 fits :: Board -> String -> (Int, Int) -> String
 fits board word (startX, startY) direction =
-  | direction == "horizontal" = map (\y -> board ! y ! startY) yRange
-  | direction == "vertical" = map (\x -> board ! x ! startx) yRange
+  | direction == "horizontal" = map (\x -> board ! x ! startx) xRange
+  | direction == "vertical" = map (\y -> board ! y ! starty) yRange
   where
     xRange = [startX..(startX + (length word))]
     yRange = [startY..(startY + (length word))]
