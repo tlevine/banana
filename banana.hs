@@ -42,15 +42,14 @@ buildDict words = Map.fromListWith Set.union sortedWords
     sortedWords = map (\ word -> (List.sort word, Set.fromList [word])) words 
 
 main = do
-  f  <- readFile "/usr/share/dict/words"
-
-
+  f  <- readFile "dict"
+  let dict = buildDict $ take 5 $ lines f
+  putStrLn $ show $ dict
 
 testDict = do
   putStrLn $ show $ buildDict ["chalk", "reed", "deer"]
   putStrLn $ show $ Map.lookup "achkl" $ buildDict ["chalk", "reed", "deer"]
   putStrLn $ show $ Map.lookup "aal" $ buildDict ["chalk", "reed", "deer"]
-
 
 testFan = do
   -- This should add ("r", 'o', "und") to the board.
