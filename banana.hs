@@ -34,7 +34,7 @@ fan npieces
 
 main = do
   -- This should add ("r", 'o', "und") to the board.
-  addWord ("elephant", [("", 'p', "en"), ("ba", 'n', "ana")], ("p", 'o', "tato"), "rdnu")
+  addWord ("elephant", [("", 'p', "en"), ("ba", 'n', "ana"), ("p", 'o', "tato")]) "rdnu"
 
   putStrLn $ show $ fan 5
   putStrLn $ show $ fan 4
