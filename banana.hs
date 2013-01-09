@@ -13,11 +13,12 @@ connects words_so_far new_word = True
 
 -- Choose word length combinations
 fan :: Int -> [[Int]]
-fan 0 = []
-fan 1 = [[2]]
-fan piecesminusone = [[piecesminusone + 1]] ++ soFar
+fan 2 = [[2]]
+fan npieces = [[npieces]] ++ soFar
   where
-    soFar = map (\ list -> list ++ [2]) (fan (piecesminusone - 1 ))
+    soFar = map (\ list -> list ++ [2]) (fan (npieces - 1 ))
 
 main = do
+  putStrLn $ show $ fan 5
   putStrLn $ show $ fan 4
+  putStrLn $ show $ fan 3
