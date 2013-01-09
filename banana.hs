@@ -48,6 +48,7 @@ buildDict words = Map.fromListWith Set.union sortedWords
 main = do
   -- putStrLn $ show $ nextWord' "elephant" "root"
   putStrLn $ show $ fits "H   T" "HI  "
+  putStrLn $ show $ contents newBoard (82, 132) 4 "vertical"
 
 testFile = do
   f  <- readFile "dict"
