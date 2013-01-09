@@ -22,9 +22,15 @@ newBoard = listArray (1, boardSide) [newBoardRow| i <- [1..boardSide]]
   where
     newBoardRow = listArray (1, boardSide) [' '| i <- [1..boardSide]]
 
+firstWord :: String -> Board
+firstWord word = newBoard//[((startPointX,startPointY + y), word !! y) | y <- [0..((length word)-1)]]
+  where
+    startPointX = round $ boardSide / 2
+    startPointY = round $ boardSide / 2
+
 -- Attach a word somewhere on a string
-nextWord :: String -> String -> AttachedWord
-nextWord existingFragment newWord = (before, intersectionChar, after)
+nextWord' :: String -> String -> AttachedWord
+nextWord' existingFragment newWord = (before, intersectionChar, after)
   where
     intersectionChar = head $ Set.toList $ Set.intersection (Set.fromList existingFragment) (Set.fromList newWord)
     before = List.takeWhile (/= intersectionChar) newWord
@@ -36,7 +42,7 @@ buildDict words = Map.fromListWith Set.union sortedWords
     sortedWords = map (\ word -> (List.sort word, Set.fromList [word])) words 
 
 main = do
-  putStrLn $ show $ nextWord "elephant" "root"
+  putStrLn $ show $ nextWord' "elephant" "root"
 
 testFile = do
   f  <- readFile "dict"
