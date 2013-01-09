@@ -35,16 +35,24 @@ fan npieces
     where
       soFar = map (\ list -> list ++ [2]) (fan (npieces - 1 ))
 
-builddict :: [String] -> Map.Map String (Set.Set String)
-builddict words = Map.fromListWith Set.union sortedWords
+buildDict :: [String] -> Map.Map String (Set.Set String)
+buildDict words = Map.fromListWith Set.union sortedWords
   where
     -- sortedWords = [("acr", Set.fromList ["car"]), ("ehos", Set.fromList ["shoe"])]
     sortedWords = map (\ word -> (List.sort word, Set.fromList [word])) words 
 
 main = do
-  putStrLn $ show $ builddict ["chalk", "reed", "deer"]
+  f  <- readFile "/usr/share/dict/words"
 
-test = do
+
+
+testDict = do
+  putStrLn $ show $ buildDict ["chalk", "reed", "deer"]
+  putStrLn $ show $ Map.lookup "achkl" $ buildDict ["chalk", "reed", "deer"]
+  putStrLn $ show $ Map.lookup "aal" $ buildDict ["chalk", "reed", "deer"]
+
+
+testFan = do
   -- This should add ("r", 'o', "und") to the board.
   -- addWord ("elephant", [("bana", 'n', "a"), ("p", 'o', "tato")]) "rdnu"
 
