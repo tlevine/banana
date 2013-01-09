@@ -13,33 +13,29 @@ import qualified Data.Set as Set
 import qualified Data.Tuple as Tuple
 
 -- Board structure
-type Board = Array.Array Integer (Array.Array Integer Char)
+type Board = Array.Array Int (Array.Array Int Char)
 
 boardSide = 292
 
 newBoard :: Board
-newBoard = listArray (1, boardSide) [newBoardRow| i <- [1..boardSide]]
+newBoard = Array.listArray (1, boardSide) [newBoardRow| i <- [1..boardSide]]
   where
-    newBoardRow = listArray (1, boardSide) [' '| i <- [1..boardSide]]
-
-firstWord :: String -> Board
-firstWord word = newBoard//[((startPointX,startPointY + y), word !! y) | y <- [0..((length word)-1)]]
-  where
-    startPointX = round $ boardSide / 2
-    startPointY = round $ boardSide / 2
+    newBoardRow = Array.listArray (1, boardSide) [' '| i <- [1..boardSide]]
 
 -- What does a location have as the word?
-contents :: Board -> (Int, Int) -> Int -> String
-contents board (startX, startY) wordLength direction =
-  | direction == "horizontal" = map (\x -> board ! x ! startx) xRange
-  | direction == "vertical" = map (\y -> board ! y ! starty) yRange
+contents :: Board -> (Int, Int) -> Int -> String -> String
+contents board (startX, startY) wordLength direction
+  | direction == "horizontal" = map (\x -> board Array.! x Array.! startX) xRange
+  | direction == "vertical" = map (\y -> board Array.! y Array.! startY) yRange
   where
     xRange = [startX..(startX + (wordLength))]
     yRange = [startY..(startY + (wordLength))]
 
 -- Does a word fit at a location?
-fits :: String -> String -> Bool
-fits boardStrip newWord = map (\pair -> (fst pair) == ' ' || (fst pair == snd pair)) $ zip boardStrip newWord
+fits :: String -> String -> [Bool]
+fits boardStrip newWord = map letterMatches $ zip boardStrip newWord
+  where
+    letterMatches pair = fst pair == ' ' || fst pair == snd pair || ' ' == snd pair 
 
 -- nextWord :: Board -> Board
 -- nextWord oldBoard =
@@ -50,7 +46,8 @@ buildDict words = Map.fromListWith Set.union sortedWords
     sortedWords = map (\ word -> (List.sort word, Set.fromList [word])) words 
 
 main = do
-  putStrLn $ show $ nextWord' "elephant" "root"
+  -- putStrLn $ show $ nextWord' "elephant" "root"
+  putStrLn $ show $ fits "H   T" "HI  "
 
 testFile = do
   f  <- readFile "dict"
