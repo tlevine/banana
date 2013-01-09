@@ -6,15 +6,21 @@
 --
 -- There are only 145 letters, so we can make the board twice that big.
 
+import qualified Data.Array as Array
 import qualified Data.List as List
 import qualified Data.Map as Map
 import qualified Data.Set as Set
   
-type FirstWord = String
-type AttachedWord = (String, Char, String)
-type Board = (FirstWord, [AttachedWord])
+
+-- Board structure
+type Board = Array.Array Integer (Array.Array Integer Char)
 
 boardSide = 292
+
+newBoard :: Board
+newBoard = listArray (1, boardSide) [newBoardRow| i <- [1..boardSide]]
+  where
+    newBoardRow = listArray (1, boardSide) [' '| i <- [1..boardSide]]
 
 -- Attach a word somewhere on a string
 nextWord :: String -> String -> AttachedWord
