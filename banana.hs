@@ -28,15 +28,11 @@ firstWord word = newBoard//[((startPointX,startPointY + y), word !! y) | y <- [0
     startPointX = round $ boardSide / 2
     startPointY = round $ boardSide / 2
 
--- Is the letter a space or the letter
-spaceOr :: Char -> Char -> Bool
-spaceOr observed expected = Set.member expected $ Set.fromList [observed, ' ']
-
 -- Does a word fit at a location?
-fits :: Board -> String -> (Int, Int) -> Bool
+fits :: Board -> String -> (Int, Int) -> String
 fits board word (startX, startY) direction =
-  | direction == "horizontal" = map (\x -> spaceOr (board ! x ! startx) ) xRange
-  | direction == "vertical" = map (\y -> spaceOr (board ! starty ! y) ) yRange
+  | direction == "horizontal" = map (\y -> board ! y ! startY) yRange
+  | direction == "vertical" = map (\x -> board ! x ! startx) yRange
   where
     xRange = [startX..(startX + (length word))]
     yRange = [startY..(startY + (length word))]
