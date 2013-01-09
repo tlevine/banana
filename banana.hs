@@ -13,12 +13,20 @@ connects words_so_far new_word = True
 
 -- Choose word length combinations
 fan :: Int -> [[Int]]
-fan 2 = [[2]]
-fan npieces = [[npieces]] ++ soFar
-  where
-    soFar = map (\ list -> list ++ [2]) (fan (npieces - 1 ))
+fan npieces
+  | npieces < 2 = []
+  | otherwise = [[npieces]] ++ soFar
+    where
+      soFar = map (\ list -> list ++ [2]) (fan (npieces - 1 ))
 
 main = do
   putStrLn $ show $ fan 5
   putStrLn $ show $ fan 4
   putStrLn $ show $ fan 3
+  putStrLn $ show $ fan 2
+
+  putStrLn "The rest should be empty."
+  putStrLn $ show $ fan 1
+  putStrLn $ show $ fan 0
+  putStrLn $ show $ fan ( - 24)
+  putStrLn $ show $ fan ( -2342)
