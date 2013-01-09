@@ -32,8 +32,8 @@ contents board (startX, startY) wordLength direction
     yRange = [startY..(startY + (wordLength))]
 
 -- Does a word fit at a location?
-fits :: String -> String -> [Bool]
-fits boardStrip newWord = map letterMatches $ zip boardStrip newWord
+fits :: String -> String -> Bool
+fits boardStrip newWord = all letterMatches $ zip boardStrip newWord
   where
     letterMatches pair = fst pair == ' ' || fst pair == snd pair || ' ' == snd pair 
 
@@ -47,7 +47,7 @@ buildDict words = Map.fromListWith Set.union sortedWords
 
 main = do
   -- putStrLn $ show $ nextWord' "elephant" "root"
-  putStrLn $ show $ fits "H   T" "HI  "
+  putStrLn $ show $ fits " H  T" " HI "
   putStrLn $ show $ contents newBoard (82, 132) 4 "vertical"
 
 testFile = do
